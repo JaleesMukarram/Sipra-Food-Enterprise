@@ -1,18 +1,33 @@
-
 * {
-
     box-sizing: border-box;
 }
 
-.single-product-container{
-
-    background-color: aqua;
-
+.single-product-container {
+    text-decoration: none;
+    color: var(--color-primary);
+    transition: 0.7s;
+    position: relative;
+    margin-top: 20px;
 }
 
-.single-product{
-
-    background-color: antiquewhite;
+.single-product {
+    background-color: #F1F1F1;
     margin: 4%;
     box-shadow: 4px 4px 12px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 20px;}
+    border-radius: 20px;
+    
+}
+
+.single-product:hover {
+    background-color: var(--color-white);
+    box-shadow: 8px 8px 24px 8px rgba(0, 0, 0, 0.25);
+}
+
+.single-product-image {
+    max-width: 100%;
+    min-width: 100%;
+    height: 250px;
+    margin: 0px;
+    padding: 0px;
+    background-color: rgba(0, 0, 0, 0);
+}

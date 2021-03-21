@@ -90,4 +90,9 @@ define('APP_NAME', "Sipra Food Enterprise");
 // Tables
 define('TABLE_EMPLOYEE', 'employee');
 define('TABLE_PRODUCTS', 'product');
+define('TABLE_STOCKS', 'stock');
+
+define('TABLE_STOCK_IN', 'stock_in');
+define('TABLE_STOCK_OUT', 'stock_out');
+define('TABLE_STOCK_OUT_RETURN', 'stock_out_return');
 

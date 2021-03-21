@@ -2,7 +2,7 @@
 
 <div class="text-center">
     <br>
-    <h2><b>Add New Employee</b></h2>
+    <h2><b> <?php echo isset($employee) ? "Edit" : "Add New"  ?> Employee</b></h2>
 </div>
 
 
@@ -14,7 +14,7 @@
         <div class="col-lg-6 col-sm-12 form-single-item">
             <label class="form-label" for="name">Name *</label><b class="form-error" id="name_error">Name required</b>
             <br>
-            <input class="form-input" name="name" id="name" type="text" placeholder="Azam Khan">
+            <input class="form-input" name="name" id="name" type="text" placeholder="Azam Khan" value="<?php echo isset($employee) ? $employee->name : "" ?>">
 
 
         </div>
@@ -22,7 +22,7 @@
         <div class="col-lg-6 col-sm-12 form-single-item">
             <label class="form-label" for="phone">Phone *</label><b class="form-error" id="phone_error">Valid phone required</b>
             <br>
-            <input class="form-input" name="phone" id="phone" type="tel" pattern="[0-9]{4}=[0-9]{7}" placeholder="03XX-XXXXXXX">
+            <input class="form-input" name="phone" id="phone" type="tel" pattern="[0-9]{4}=[0-9]{7}" placeholder="03XX-XXXXXXX" value="<?php echo isset($employee) ? $employee->phone : "" ?>">
         </div>
     </div>
 
@@ -32,13 +32,13 @@
         <div class="col-lg-6 col-sm-12 form-single-item">
             <label class="form-label" for="position">Position *</label><b class="form-error" id="position_error">Valid position required</b>
             <br>
-            <input class="form-input" name="position" id="position" type="text" placeholder="Sales Executive">
+            <input class="form-input" name="position" id="position" type="text" placeholder="Sales Executive" value="<?php echo isset($employee) ? $employee->position : "" ?>">
         </div>
 
         <div class="col-lg-6 col-sm-12 form-single-item">
             <label class="form-label" for="salary">Salary Rs *</label><b class="form-error" id="salary_error">Salary (1000=500000) required</b>
             <br>
-            <input class="form-input" name="salary" id="salary" type="number" min="1000" max="500000" placeholder="30000">
+            <input class="form-input" name="salary" id="salary" type="number" min="1000" max="500000" placeholder="30000" value="<?php echo isset($employee) ? $employee->salary : "" ?>">
         </div>
     </div>
 
@@ -48,7 +48,7 @@
         <div class="col-lg-12 form-single-item">
             <label class="form-label" for="address">Address *</label><b class="form-error" id="address_error">Address required</b>
             <br>
-            <input class="form-input" name="address" id="address" type="text" placeholder="Model Town C, Bahawalpur">
+            <input class="form-input" name="address" id="address" type="text" placeholder="Model Town C, Bahawalpur" value="<?php echo isset($employee) ? $employee->address : "" ?>">
         </div>
     </div>
 
@@ -58,7 +58,7 @@
         <div class="col-lg-6 col-sm-12 form-single-item">
             <label class="form-label" for="joining_date">Joining Date *</label><b class="form-error" id="joining_date_error">Joinig Date required</b>
             <br>
-            <input class="form-input" name="joining_date" id="joining_date" type="date" placeholder="15/1/2021">
+            <input class="form-input" name="joining_date" id="joining_date" type="date" placeholder="15/1/2021" value="<?php echo isset($employee) ? $employee->joining_date : "" ?>">
             <br><br>
             <input class="form-input-radio" name="name" type="radio"> <b>Joined Today</b>
         </div>
@@ -67,8 +67,8 @@
             <label class="form-label" for="working">Working Status *</label>
             <br>
             <select class="form-input-select" name="working" id="working">
-                <option value="1">Working</option>
-                <option value="0">Not Working</option>
+                <option value="1" <?php echo isset($employee) ? ($employee->working ? "selected" : "") : "" ?>>Working</option>
+                <option value="0" <?php echo isset($employee) ? ($employee->working ? "" : "selected") : "" ?>>Not Working</option>
             </select>
 
         </div>
@@ -78,10 +78,19 @@
     <div class="row form-single-row text-center">
         <div class="col-lg-12 form-single-item">
             <br><br>
-            <input class="btn form-input-button" value="Add Employee" type="submit" name="submit" id="submit">
+            <input class="btn form-input-button" value="<?php echo isset($employee) ? "Edit" : "Add"  ?> Employee" type="submit" name="submit" id="submit">
 
         </div>
     </div>
+
+
+    <?php if (isset($employee)) :  ?>
+
+        <input type="hidden" name="id" id="id" value="<?php echo $employee->id ?>">
+
+
+    <?php endif ?>
+
 </form>
 
 <div class="loader-internal none" id="loader_internal"></div><br>
@@ -162,13 +171,15 @@
 
         let working = $('#working').val();
 
+        let id = $('#id').val();
 
-        sendFormViaAJAX(name, phone, position, salary, address, joining_date, working);
+
+        sendFormViaAJAX(id, name, phone, position, salary, address, joining_date, working);
 
         return false;
     }
 
-    function sendFormViaAJAX(name, phone, position, salary, address, joining_date, working) {
+    function sendFormViaAJAX(id, name, phone, position, salary, address, joining_date, working) {
 
         onFormSending();
 
@@ -177,6 +188,7 @@
             url: "<?php echo base_url('employees/addnewemployee') ?>",
             data: {
 
+                id: id,
                 name: name,
                 phone: phone,
                 position: position,
@@ -187,13 +199,14 @@
 
             },
             success: function(response) {
+                response = JSON.parse(response);
 
-                if (response == 'done') {
+                if (response.status == 'done') {
 
                     onEmployeeAdded(name);
                 }
 
-                console.log(response);
+                console.log(response.status);
                 onFormSent();
 
             },
@@ -260,7 +273,7 @@
         $('#address').val('');
         $('#joining_date').val('');
 
-        showModel('Employee ' + employeeName + ' Added', 'A new Employee has been Added');
+        showModel('Employee ' + employeeName + ' Added/Edited', 'An Employee data has been Added/Edited');
 
     }
 </script>

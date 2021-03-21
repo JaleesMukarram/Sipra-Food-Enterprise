@@ -204,6 +204,24 @@
     border-radius: 25px;
  }
 
+ .icon-small{
+
+   width: 30px;
+   height: 30px;
+ }
+
+ .icon-medium{
+
+   width: 70px;
+   height: 70px;
+ }
+
+ .icon-large{
+
+   width: 150px;
+   height: 150px;
+ }
+
  /* Form Elements Started */
 
  .form-container {

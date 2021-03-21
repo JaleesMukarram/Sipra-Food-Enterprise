@@ -12,7 +12,7 @@ class Home extends CI_Controller
     {
 
         $header =  array();
-        $this->CommonModel->add_titie($header, "Home");
+        $this->CommonModel->addTitie($header, "Home");
         $this->load->view("Commons/Header", $header);
 
 

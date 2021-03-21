@@ -82,7 +82,7 @@
                         <li class="nav-single-item">
 
                             <img src="<?php echo base_url('includes/images/stock.png') ?>" alt="">
-                            <a class="nav-single-link  <?php if ($title == 'Stock') echo 'nav-selected'  ?>" href="<?php echo base_url('stock'); ?>">Stock</a>
+                            <a class="nav-single-link  <?php if ($title == 'Stock') echo 'nav-selected'  ?>" href="<?php echo base_url('stocks'); ?>">Stock</a>
 
                         </li>
 
