@@ -34,4 +34,4 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 # Added custom
 
 includes/uploads/
-user_guide
+/user_guide/*
